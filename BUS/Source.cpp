@@ -141,9 +141,13 @@ public:
 		return a;
 	}
 
+	bool bus_to_stop(const string& bus)const {
+		return (buses_to_stops.count(bus) != 0);
+	}
+
 	StopsForBusResponse GetStopsForBus(const string& bus) const {
 		StopsForBusResponse a;
-		if (buses_to_stops.count(bus) != 0)
+		if (bus_to_stop(bus))
 		{
 			for (const string& stop : buses_to_stops.at(bus)) {
 				a.Stops_Response.push_back(stop);
@@ -166,9 +170,13 @@ public:
 		return a;
 	}
 
+	bool  isempty() const {
+		return (!buses_to_stops.empty());
+    }
+
 	AllBusesResponse GetAllBuses() const {
 		AllBusesResponse a;
-		if (!buses_to_stops.empty()) {
+		if (isempty()) {
 			for (const auto& bus_item : buses_to_stops) {
 				for (const string& stop : bus_item.second) {
 					a.All_Buses_Response[bus_item.first].push_back(stop);

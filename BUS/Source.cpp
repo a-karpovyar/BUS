@@ -118,6 +118,7 @@ private:
 	map<string, vector<string>> buses_to_stops, stops_to_buses;
 
 public:
+
 	void AddBus(const string& bus, const vector<string>& stops) {
 
 		buses_to_stops[bus] = stops;
@@ -125,10 +126,13 @@ public:
 			stops_to_buses[stop].push_back(bus);
 		}
 	}
+	bool bus_count(const string& stop) const{
+		return (stops_to_buses.count(stop) == 0);
+	}
 
 	BusesForStopResponse GetBusesForStop(const string& stop) const {
 		BusesForStopResponse a;
-		if (stops_to_buses.count(stop) == 0) {
+		if (bus_count(stop)) {
 			a.Buses_For_Stop_Response.push_back("No stop");
 		}
 		else {
